@@ -33,12 +33,17 @@ src
 │   │   ├── fonts
 │   │   ├── img
 │   │   └── style
+│   │   ├── └── theme.scss
 │   ├── components
 │   ├── hooks
 │   ├── layout
 │   ├── main.jsx
 │   ├── pages
-│   │   └── Home.js
+│   │   └── App/Home.js
+│   │   └── App/routes.js
+│   │   └── App/index.js
+│   │   └── Member/Dashboard.js
+│   │   └── router.js
 │   └── store
 ```
 
@@ -215,5 +220,10 @@ ReactDOM.createRoot(container).render(
 
 ```
 
+## pages/App
 
-## 
+```jsx
+
+```
+
+## pages/Member
