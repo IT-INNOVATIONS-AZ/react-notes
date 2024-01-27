@@ -424,7 +424,7 @@ export default function App() {
 ```
 
 
-## Global state to get data from everywhere
+## Global state to get data from everywhere Zustand
 
 ```bash
 yarn add zustand
