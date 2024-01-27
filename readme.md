@@ -385,3 +385,42 @@ const functName = () => {
 yarn add react-router-dom
 ```
 
+#### adding browser router to main.(jsx|tsx)
+
+```jsx
+import { BrowserRouter } from 'react-router-dom';
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      {/* routes go here, as children */}
+    </BrowserRouter>
+  );
+}
+```
+
+### Example of routing
+
+```jsx
+// About Page
+
+function About() {
+  return <>about</>   
+}
+
+// App.jsx
+
+import { BrowserRouter } from 'react-router-dom';
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Route path="/about" component={About} />
+    </BrowserRouter>
+  );
+}
+
+
+
+
+```
