@@ -227,3 +227,161 @@ ReactDOM.createRoot(container).render(
 ```
 
 ## pages/Member
+
+## add language to project
+
+```bash
+yarn add react-i18next i18next i18next-browser-languagedetector
+```
+
+## az.json
+
+```json
+{
+  "app": {
+    "yes": "Bəli",
+    "no": "Xeyr",
+    "unknown": "Naməlum"
+  },
+  "errorPage": {
+    "error": "Xəta",
+    "title": "Səhifə tapılmadı 🕵🏻‍♀️",
+    "description": "Oops! 😖 axtardığınız səhifə tapılmadı.",
+    "goBack": "Ana səhifəyə qayıt"
+  },
+  "dashboard": {},
+  "cardMedal": {
+    "title": "Təbriklər 🎉  {{name}}",
+    "description": "Ay ərzindən <b>{{count}}</b> coin qazanıbsınız.",
+    "button": "Coinlərim 💰"
+  },
+  "cardStatistics": {
+    "title": "Statistika",
+    "updated": "{{date}} əvvəl yeniləndi"
+  },
+  "cardComment": {
+    "title": "Rəy",
+    "updated": "{{date}} əvvəl yeniləndi"
+  },
+  "homeworkTracker": {
+    "title": "Ev Tapşırıq"
+  }
+}
+```
+
+## en.json
+
+```js
+{
+	"app": {
+		"yes": "Yes",
+		"no": "No",
+		"to": "to",
+		"unknown": "Unknown"
+	},
+	"errorPage": {
+		"error": "Error",
+		"title": "Page Not Found 🕵🏻‍♀️",
+		"description": "Oops! 😖 the page you are looking for is not found.",
+		"goBack": "Back to home"
+	},
+	"dashboard": {},
+	"cardMedal": {
+		"title": "Congratulation 🎉  {{name}}",
+		"description": "You have earned <b>{{count}}</b> coins during the month.",
+		"button": "My Coins 💰"
+	}
+}
+```
+
+```js
+export enum LANGUAGES {
+	AZ = "az",
+	EN = "en"
+}
+
+export const LanguageList = [
+	{
+		key: LANGUAGES.AZ,
+		value: "Azərbaycan dili",
+	},
+	{
+		key: LANGUAGES.EN,
+		value: "English",
+	}
+];
+```
+
+### add to main.(jsx|tsx) to initalize i18n
+
+## config/i18n.js
+
+```js
+// ** I18n Imports
+import i18n from "i18next";
+import Backend from "i18next-xhr-backend";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { LANGUAGES } from "@lang/languages";
+
+const lang = {
+  default: "az",
+  set(lang) {
+    return (this.default = lang);
+  },
+};
+
+export const cangeLang = (lang) => lang.set(lang);
+
+const az = require("../lang/az.json");
+const en = require("../lang/en.json");
+
+export const initI18n = (): void => {
+  i18n
+    .use(Backend)
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      resources: { en, az },
+      lng: lang.default,
+      fallbackLng: LANGUAGES.EN,
+      debug: false,
+      keySeparator: false,
+      react: {
+        useSuspense: true,
+      },
+      interpolation: {
+        escapeValue: false,
+        formatSeparator: ",",
+      },
+    });
+};
+export default i18n;
+```
+
+```jsx
+import { initI18n } from "@configs/i18n";
+
+// other imports
+
+initI18n();
+```
+
+#### usage in page
+
+```jsx
+import { useTranslation } from "react-i18next";
+
+const functName = () => {
+  const [t] = useTranslation("errorPage"); // -> errorPage is the key of json object
+
+  return <h1 className="mb-4">{t("title")}</h1>; // -> "Page Not Found 🕵🏻‍♀️",
+};
+```
+
+## Routing
+
+```bash
+yarn add react-router-dom
+```
+
